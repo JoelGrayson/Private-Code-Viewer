@@ -1,0 +1,26 @@
+<style>
+    .file-link-container div {
+        display: block;
+    }
+    .file-link {
+        text-decoration: underline;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .file-link:hover {
+        color: blue;
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', ()=>{
+        console.log(document.querySelectorAll('.file-link'));
+        [...document.querySelectorAll('.file-link')].forEach(el=>{
+            el.addEventListener('click', e=>{
+                window.location.pathname=e.target.dataset.url;
+            });
+        })
+    })
+</script>
+<div class="file-link-container">
+    <%- include('./file-list.ejs'); %>
+</div>

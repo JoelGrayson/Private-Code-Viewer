@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Private Code Viewer</title>
+    <meta name="robots" content="noindex,nofollow">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <link rel="stylesheet" href="https://joelgrayson.com/styles/button.v2.css">
+    <style>
+        body, html {
+            padding: 0;
+            margin: 0;
+        }
+        .container {
+            padding: 0 5%;
+        }
+    </style>
+</head>
+<body>
+    <% if (loggedIn) { %>
+        <div style="height: 80px; position: relative;">
+            <!-- <div style="height: 100%;"> -->
+                <h1 style="text-align: center; padding: 0; margin: 0; padding-top: 20px;">Private Code Viewer</h1>
+                <div style="position: absolute; right: 0; top: 20px;">
+                    <div style="text-align: right;">You are logged in as: <%- username %></div>
+                    <button onClick="window.location.href='/'">Log Out</button>
+                </div>
+            <!-- </div> -->
+        </div>
+        <div style="display: flex; height: calc(100vh - 80px);">
+            <div style="width: 50vw; height: 100%;">
+                <div style="width: calc(50vw - 2rem); overflow-wrap: break-word; height: 100%; overflow-y: scroll;">
+                    <h3 style="text-align: center;">Navigation</h3>
+                    <div style="padding-left: 2rem; text-indent: -2rem;">
+                        <%- include('./navigation.ejs'); %>
+                    </div>
+                </div>
+            </div>
+            <div style="width: 50vw; height: 100%;">
+                <!-- white-space: break-spaces; -->
+                <% if (url) { %>
+                    <div style="overflow-y: scroll; height: 100%;">
+                        <h3 style="text-align: center;">Code</h3>
+                        <pre style="position: relative;"><code style="height: 100%"><%= include(url); %></code></pre>
+                    </div>
+                <% } else { %>
+                    <p>Please click a file on the left to see its contents.</p>
+                <% } %>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+        <!-- and it's easy to individually load additional languages -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+
+        <script>hljs.highlightAll({
+
+        });</script>
+    <% } else { %>
+        <div class="container">
+            <h1>Log In</h1>
+            <% if (errorMessage) { %>
+                <div style="color: red"><%- errorMessage %></div>
+            <% } %>
+            <p>Log in to see <%- url ? `<code>${url}</code>` : 'files' %>.</p>
+            <div>
+                <div>
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" id="username" />
+                </div>
+                <div>
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="password" />
+                </div>
+                <button id="loginBtn">Log In</button>
+            </div>
+        </div>
+        <script>
+            document.getElementById('loginBtn').addEventListener('click', ()=>{
+                const newUsername=document.getElementById('username').value;
+                const newPassword=document.getElementById('password').value;
+                let url=new URL(window.location.href);
+                url.searchParams.set('username', newUsername);
+                url.searchParams.set('password', newPassword);
+                window.location.href=url.href;
+            });
+        </script>
+    <% } %>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+    "name": "private-code-viewer",
+    "version": "1.0.0",
+    "description": "",
+    "main": "main.js",
+    "scripts": {
+        "start": "node app.js",
+        "dev": "nodemon app.js"
+    },
+    "keywords": [],
+    "author": "Joel Grayson <joel@joelgrayson.com> (https://github.com/JoelGrayson)",
+    "license": "MIT",
+    "dependencies": {
+        "compression": "^1.7.4",
+        "ejs": "^3.1.9",
+        "express": "^4.18.2"
+    },
+    "devDependencies": {
+        "nodemon": "^3.0.2"
+    }
+}
