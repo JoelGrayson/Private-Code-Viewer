@@ -10,14 +10,21 @@
     .file-link:hover {
         color: blue;
     }
+    .file-link.current {
+        background-color: yellow;
+        color: blue;
+    }
 </style>
 <script>
     document.addEventListener('DOMContentLoaded', ()=>{
-        console.log(document.querySelectorAll('.file-link'));
         [...document.querySelectorAll('.file-link')].forEach(el=>{
             el.addEventListener('click', e=>{
-                window.location.pathname=e.target.dataset.url;
+                const url=e.target.dataset.url;
+                window.location.pathname=url;
             });
+
+            if (el.dataset.url===window.location.pathname)
+                el.classList.add('current');
         })
     })
 </script>
